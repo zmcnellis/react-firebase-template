@@ -1,17 +1,23 @@
-# Auth with React Router V4 and Firebase V3
-This is an example repo for authenticating with Firebase and React Router.
+React + Firebase Template
+=====================
 
-*Using React 15.4.0, React Router 4, and Firebase 3.6.1*
+This is a starter template for React and Firebase using ES6/Babel transpiler.
 
-#### Features:
-* Protected Routes with React Router
-* Register new users with Firebase
-* Add new users to ```/users``` in your Firebase database
-* Login/Logout Functionality
-* Simple Boostrap UI
+*Note it does not use Redux*
 
-#### Instructions:
-* Swap out the firebase config in ```config/constants``` with your own
-* ```npm install```
-* ```npm start```
-* Visit ```localhost:3000```
+## Stack
+
+- React
+  - [X] React `15.0.2`
+  - [X] React Router `2.4.0`
+- Webpack
+  - [X] Webpack `1.13.0`
+  - [X] Webpack Dev Middleware `1.6.1`
+  - [X] Webpack Hot Middleware `2.10.0`
+- Firebase
+  - [X] Firebase `4.1.3`
+- Linting
+  - [X] Eslint `2.9.0`
+- Styles
+  - [X] Bootstrap `3.3.6`
+  - [X] React Bootstrap `0.31.0`
