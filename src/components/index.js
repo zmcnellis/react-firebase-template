@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
+// import 'bootstrap/dist/css/bootstrap.css';
+import '../../packages/bootstrap/dist/css/bootstrap.css';
+import { Button, Nav, NavDropdown, NavbarBrand, Navbar, NavItem, MenuItem, Glyphicon } from 'react-bootstrap';
 import { Route, BrowserRouter, Link, Redirect, Switch } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
@@ -27,6 +29,16 @@ function PublicRoute ({component: Component, authed, ...rest}) {
         ? <Component {...props} />
         : <Redirect to="/dashboard" />}
     />
+  );
+}
+
+function ListItemLink({to, children}) {
+  return (
+    <Route path={to} children={({match}) => (
+      <li role="presentation" className={match ? 'active' : ''}>
+        <Link to={to}>{children}</Link>
+      </li>
+    )} />
   );
 }
 
@@ -60,34 +72,28 @@ export default class App extends Component {
     return this.state.loading === true ? <h1>Loading</h1> : (
       <BrowserRouter>
         <div>
-          <nav className="navbar navbar-default navbar-static-top">
-            <div className="container">
-              <div className="navbar-header">
-                <Link to="/" className="navbar-brand">React Router + Firebase Auth</Link>
-              </div>
-              <ul className="nav navbar-nav pull-right">
-                <li>
-                  <Link to="/" className="navbar-brand">Home</Link>
-                </li>
-                <li>
-                  <Link to="/dashboard" className="navbar-brand">Dashboard</Link>
-                </li>
-                <li>
-                  {this.state.authed
-                    ? <button
-                        style={{border: 'none', background: 'transparent'}}
-                        onClick={() => {
-                          logout();
-                        }}
-                        className="navbar-brand">Logout</button>
-                    : <span>
-                        <Link to="/login" className="navbar-brand">Login</Link>
-                        <Link to="/register" className="navbar-brand">Register</Link>
-                      </span>}
-                </li>
-              </ul>
-            </div>
-          </nav>
+          <Navbar fixedTop fluid>
+            <Navbar.Header>
+              <Navbar.Brand>
+                <Link to="/">React Router + Firebase Auth</Link>
+              </Navbar.Brand>
+              <Navbar.Toggle/>
+            </Navbar.Header>
+            <Navbar.Collapse>
+              <Nav>
+                <ListItemLink to="/dashboard">Dashboard</ListItemLink>
+              </Nav>
+              <Nav pullRight>
+                {this.state.authed
+                  ? <NavDropdown eventKey={1} id="basic-nav-dropdown" title={
+                      <Glyphicon glyph="user" />
+                    }>
+                      <MenuItem eventKey={1.1} onClick={() => logout() }>Logout</MenuItem>
+                    </NavDropdown>
+                  : <ListItemLink to="/login">Login</ListItemLink> }
+              </Nav>
+            </Navbar.Collapse>
+          </Navbar>
           <div className="container">
             <div className="row">
               <Switch>
@@ -95,7 +101,16 @@ export default class App extends Component {
                 <PublicRoute authed={this.state.authed} path="/login" component={Login} />
                 <PublicRoute authed={this.state.authed} path="/register" component={Register} />
                 <PrivateRoute authed={this.state.authed} path="/dashboard" component={Dashboard} />
-                <Route render={() => <h3>No Match</h3>} />
+                <Route render={() => 
+                  <div>
+                    <h1>Page Not Found</h1>
+                    <div className="row">
+                      <div className="col col-xs-12">
+                        Try visiting the home page <Link to="/">here</Link>
+                      </div>
+                    </div>
+                  </div>
+                } />
               </Switch>
             </div>
           </div>

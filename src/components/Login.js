@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { login, resetPassword } from '../helpers/auth';
+import { Link } from 'react-router-dom';
 
 function setErrorMsg(error) {
   return {
@@ -49,6 +50,11 @@ export default class Login extends Component {
           }
           <button type="submit" className="btn btn-primary">Login</button>
         </form>
+        <br/>
+        <div>
+          {"Don't have an account? Register "}
+          <Link to="/register">here</Link>
+        </div>
       </div>
     );
   }
